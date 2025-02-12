@@ -1,5 +1,5 @@
 <h1>listagem de produtos </h1>
-<a href="{{ route('create.store.products')}}" >Criar Produto</a>
+<a href="{{ route('store.products.create')}}" >Criar Produto</a>
 
 <table>
     <thead>
@@ -8,7 +8,7 @@
         <th>Preço</th>
     </thead>
     <tbody>
-        @foreach ($products as $product)
+        @foreach ($products->items() as $product)
         <tr>
             <td>
                 {{$product->name}}
@@ -19,7 +19,19 @@
             <td>
                 {{$product->price}}
             </td>
+            <td> {{$product->category['name']}} </td>
+            <td>
+                <a href="{{ route('store.products.show', $product->id) }}">Detalhes</a>
+            </td>
+            <td>
+                <a href="{{ route('store.products.edit', $product->id) }}">Editar</a>
+            </td>
         </tr>
         @endforeach
     </tbody>
 </table>
+
+<x-pagination 
+    :paginator="$products" 
+    :appends="$filter"
+/>
